@@ -1,0 +1,52 @@
+body{
+    margin: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT';
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+    color:#fff;
+    padding: 0.8rem 1.5rem;
+}
+
+.nav-logo{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+}
+
+li{
+    margin: 10px;
+    padding: 10px;
+    font-size: larger;
+}
+
+a{
+    color:#fff
+}
+
+@media (max-width:768px){
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: #333;
+        position: absolute;
+        top:60px;
+        right: 0;
+        width: 180px;
+        padding: 1rem;
+    }
+    .nav-links.open{
+        display: flex;
+    }
+    .nav-toggle{
+        display: flex;
+    }
+}
