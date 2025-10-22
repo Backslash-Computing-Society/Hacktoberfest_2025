@@ -1,7 +1,5 @@
----
+### 🤝 CONTRIBUTING.md
 
-### 🤝 **CONTRIBUTING.md**
-```md
 # Contributing Guidelines
 
 Thanks for contributing to **Multi-Language Code Collection** 🎉  
@@ -65,9 +63,7 @@ Merged PRs count automatically.
 
 **Title:** Added factorial program in Python  
 **Description:**
-example
-
-- Added factorial.py in python/
+- Added `factorial.py` in `python/`
 - Uses recursion
 - Includes sample input/output
 
