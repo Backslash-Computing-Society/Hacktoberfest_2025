@@ -1,0 +1,85 @@
+import numpy as np
+
+class LinearRegressionGD:
+    def __init__(self, lr=0.01, epochs=1000):
+        self.lr = lr
+        self.epochs = epochs
+        self.weights = None
+        self.bias = None
+
+    # Batch Gradient Descent
+    def fit_batch(self, X, y):
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(n_features)
+        self.bias = 0
+        
+        for _ in range(self.epochs):
+            y_pred = np.dot(X, self.weights) + self.bias
+            dw = (1/n_samples) * np.dot(X.T, (y_pred - y))
+            db = (1/n_samples) * np.sum(y_pred - y)
+            
+            self.weights -= self.lr * dw
+            self.bias -= self.lr * db
+
+    # Stochastic Gradient Descent
+    def fit_sgd(self, X, y):
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(n_features)
+        self.bias = 0
+        
+        for _ in range(self.epochs):
+            for i in range(n_samples):
+                xi = X[i]
+                yi = y[i]
+                y_pred = np.dot(xi, self.weights) + self.bias
+                dw = xi * (y_pred - yi)
+                db = y_pred - yi
+                
+                self.weights -= self.lr * dw
+                self.bias -= self.lr * db
+
+    # Mini-batch Gradient Descent
+    def fit_mini_batch(self, X, y, batch_size=32):
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(n_features)
+        self.bias = 0
+        
+        for _ in range(self.epochs):
+            indices = np.arange(n_samples)
+            np.random.shuffle(indices)
+            X_shuffled = X[indices]
+            y_shuffled = y[indices]
+            
+            for start in range(0, n_samples, batch_size):
+                end = start + batch_size
+                xb = X_shuffled[start:end]
+                yb = y_shuffled[start:end]
+                
+                y_pred = np.dot(xb, self.weights) + self.bias
+                dw = (1/xb.shape[0]) * np.dot(xb.T, (y_pred - yb))
+                db = (1/xb.shape[0]) * np.sum(y_pred - yb)
+                
+                self.weights -= self.lr * dw
+                self.bias -= self.lr * db
+
+    def predict(self, X):
+        return np.dot(X, self.weights) + self.bias
+
+
+# ===== Example Usage =====
+X = np.array([[1],[2],[3],[4],[5]])
+y = np.array([2,4,6,8,10])
+
+model = LinearRegressionGD(lr=0.01, epochs=1000)
+
+# Batch GD
+model.fit_batch(X, y)
+print("Batch GD Prediction:", model.predict(np.array([[6]])))
+
+# Stochastic GD
+model.fit_sgd(X, y)
+print("SGD Prediction:", model.predict(np.array([[6]])))
+
+# Mini-batch GD
+model.fit_mini_batch(X, y, batch_size=2)
+print("Mini-batch GD Prediction:", model.predict(np.array([[6]])))
